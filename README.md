@@ -141,7 +141,7 @@ export OPENROUTER_API_KEY="your-key-here"
 python scripts/process_photos.py
 ```
 
-The script saves progress every 10 images and resumes from where it left off. Processing all 1,977 images takes several hours and costs approximately $2-5 in API usage.
+The script saves progress every 10 images and resumes from where it left off. Processing all 1,977 images took a few hours and costs approximately $5 in API usage. Changes in model will cause these numbers to vary. I used Haiku as it was the cheapest model with "vision" capabilities at the time.
 
 ## License
 
