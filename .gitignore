@@ -1,0 +1,17 @@
+# Downloaded photos (regenerate with scripts/download_archive.py)
+photos/
+
+# Python virtual environment
+.venv/
+
+# macOS
+.DS_Store
+Icon?
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
