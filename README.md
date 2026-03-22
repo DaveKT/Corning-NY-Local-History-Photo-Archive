@@ -4,6 +4,8 @@ This project documents an effort to download, catalog, and enrich the [Corning, 
 
 The goal is to improve the discoverability of these images by generating structured tags and one-sentence descriptions for every photo, supplementing the library's existing (and often sparse) subject/date metadata.
 
+You can directly interact with the enriched data using the [Datasette Lite URL](https://lite.datasette.io/?url=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/corning_historic_photos.db#/corning_historic_photos/photos?_sort=rowid).
+
 ## Background
 
 The Corning Local History Photo Archive is a digitized collection of photographs documenting the history of Corning, NY, and the surrounding Chemung Valley. The collection covers civic life, architecture, floods, industry (particularly Corning Glass Works), schools, families, archaeological artifacts, and more.
@@ -56,11 +58,16 @@ The script also merges the AI-generated tags and descriptions back into the mast
 │   ├── image_attributes_20260314.log    # Errors from image cataloging
 │   ├── corrected_results.json           # Raw AI-generated tags and descriptions (JSON)
 │   ├── corning_photos.sqlite            # SQLite database of catalog data
+│   ├── urls.csv                         # Filename-to-URL mapping for all archive images
+│   ├── table_join.sql                   # SQL join query to produce the combined dataset
 │   └── Duplicates.sql                   # Query for finding duplicate LHNo entries
 ├── analysis/
 │   ├── collection structure.md          # Statistical analysis of the collection
 │   ├── Corning_NY_Timeline.md           # Historical timeline derived from photo descriptions
 │   └── Corning_Photo_Descriptions.xlsx  # Photo descriptions in spreadsheet form
+├── datasette/
+│   ├── corning_historic_photos.db       # SQLite database for Datasette publishing
+│   └── corning_historic_photos_20260321.csv  # Combined export (metadata + descriptions + URLs)
 ├── photos/                              # Downloaded images (not committed; see Setup)
 ├── .gitignore
 └── README.md
@@ -74,6 +81,8 @@ The `data/` directory contains both inputs and outputs of the pipeline:
 - **local-history-photo-archive-index-20260314.csv** — The same index after AI-generated tags and descriptions have been merged in.
 - **corrected_results.json** — The raw AI output: a JSON object keyed by LH number, each containing `tags` (semicolon-delimited) and `description` (one sentence).
 - **image_attributes_20260314.csv** — One row per image with filename, dimensions, megapixels, colorspace, file size, and cryptographic hashes (MD5, SHA-256).
+- **urls.csv** — Maps each downloaded filename to its source URL on the archive website (1,981 entries).
+- **table_join.sql** — SQL query that joins the metadata, photo_description, and urls tables to produce the combined dataset used for Datasette publishing.
 
 ## Analysis
 
@@ -110,6 +119,12 @@ The collection is organized into three series: 75 (1,641 photos), 76 (141 photos
 - One panoramic outlier (75-0705) at 1386x180 pixels
 
 These are documented in detail in `analysis/collection structure.md`.
+
+### Datasette
+
+The enriched catalog data has been published as an interactive [Datasette](https://datasette.io/) instance for browsing and querying. Datasette is an open-source tool that serves SQLite databases as a web interface with built-in search, filtering, and a JSON/CSV API.
+
+The `datasette/` directory contains the publication-ready database (`corning_historic_photos.db`) and a combined CSV export (`corning_historic_photos_20260321.csv`). The database was produced by joining the image metadata, catalog fields (subject, date), AI-generated tags and descriptions, and source URLs using the query in `data/table_join.sql`. The resulting dataset provides a single unified view of all 1,977 photographs with their technical attributes, descriptive metadata, and direct links to the original images on the archive website.
 
 ## Setup
 
