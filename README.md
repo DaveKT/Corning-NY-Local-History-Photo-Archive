@@ -2,7 +2,7 @@
 
 This project documents an effort to download, catalog, and enrich the [Corning, NY Local History Photo Archive](https://corningnyhistory.com/local-history-photo-archive/) using AI-generated image descriptions. The archive is maintained by the Southeast Steuben County Library and contains 1,977 digitized historical photographs spanning 1842 to 1975.
 
-The goal is to improve the discoverability of these images by generating structured tags and one-sentence descriptions for every photo, supplementing the library's existing (and often sparse) subject/date metadata.
+The goal is to improve the discoverability of these images by generating structured tags, one-sentence descriptions, and thematic category assignments for every photo, supplementing the library's existing (and often sparse) subject/date metadata.
 
 You can directly interact with the enriched data using the [Datasette Lite URL](https://lite.datasette.io/?url=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/corning_historic_photos.db#/corning_historic_photos/photos?_sort=rowid).
 
@@ -14,7 +14,7 @@ Before this project, the archive's catalog had significant gaps: 53% of records 
 
 ## How It Works
 
-The pipeline has three stages, each handled by a standalone Python script.
+The pipeline has four stages, each handled by a standalone Python script.
 
 ### 1. Download (`scripts/download_archive.py`)
 
@@ -43,13 +43,24 @@ python scripts/process_photos.py
 
 The script also merges the AI-generated tags and descriptions back into the master CSV index.
 
+### 4. Category Classification (`scripts/classify_photos.py`)
+
+Assigns each photo exactly one of 14 thematic categories (e.g., Disasters & Floods, Industry & Manufacturing, Streetscapes & Architecture) using rule-based keyword matching against the Subject, Tags, and Description fields. A strict priority hierarchy resolves ambiguity when a photo matches more than one category. The classifier is deterministic and uses only standard-library modules.
+
+```
+python scripts/classify_photos.py data/corning_photos.sqlite --output data/photo_categories.csv
+```
+
+The output CSV is imported into both `data/corning_photos.sqlite` and `datasette/corning_historic_photos.db` as a `category` table. The full category schema, priority rules, edge-case decisions, and distribution are documented in `analysis/category_classification.md`.
+
 ## Repository Structure
 
 ```
 ├── scripts/
 │   ├── download_archive.py       # Stage 1: download images from archive website
 │   ├── image_catalog.py          # Stage 2: extract technical image metadata
-│   └── process_photos.py         # Stage 3: AI-generated tags and descriptions
+│   ├── process_photos.py         # Stage 3: AI-generated tags and descriptions
+│   └── classify_photos.py        # Stage 4: rule-based category classification
 ├── data/
 │   ├── local-history-photo-archive-index-20260301.csv   # Original catalog export
 │   ├── local-history-photo-archive-index-20260314.csv   # Updated catalog with AI descriptions
@@ -64,7 +75,8 @@ The script also merges the AI-generated tags and descriptions back into the mast
 ├── analysis/
 │   ├── collection structure.md          # Statistical analysis of the collection
 │   ├── Corning_NY_Timeline.md           # Historical timeline derived from photo descriptions
-│   └── Corning_Photo_Descriptions.xlsx  # Photo descriptions in spreadsheet form
+│   ├── Corning_Photo_Descriptions.xlsx  # Photo descriptions in spreadsheet form
+│   └── category_classification.md       # Category schema, methodology, and distribution
 ├── datasette/
 │   ├── corning_historic_photos.db       # SQLite database for Datasette publishing
 │   └── corning_historic_photos_20260321.csv  # Combined export (metadata + descriptions + URLs)
@@ -82,7 +94,7 @@ The `data/` directory contains both inputs and outputs of the pipeline:
 - **corrected_results.json** — The raw AI output: a JSON object keyed by LH number, each containing `tags` (semicolon-delimited) and `description` (one sentence).
 - **image_attributes_20260314.csv** — One row per image with filename, dimensions, megapixels, colorspace, file size, and cryptographic hashes (MD5, SHA-256).
 - **urls.csv** — Maps each downloaded filename to its source URL on the archive website (1,981 entries).
-- **table_join.sql** — SQL query that joins the metadata, photo_description, and urls tables to produce the combined dataset used for Datasette publishing.
+- **table_join.sql** — SQL query that joins the metadata, photo_description, category, and urls tables to produce the combined dataset used for Datasette publishing.
 
 ## Analysis
 
@@ -90,6 +102,7 @@ The `analysis/` directory contains documents produced from the enriched data:
 
 - **collection structure.md** — A statistical profile of the collection: series breakdown, dominant subjects, data quality issues (missing fields, inconsistent formatting, colorspace mismatches), and anomalies.
 - **Corning_NY_Timeline.md** — A chronological narrative of Corning's history as documented by the 589 dated photographs in the collection, spanning 1842 to 1975. Covers the Civil War era, railroad development, major floods (1889, 1901, 1935, 1946, 1972), Corning Glass Works, and the archaeological record of the Chemung Valley.
+- **category_classification.md** — Documents the 14-category classification schema applied to all 1,977 photos. Covers design goals, the priority hierarchy for resolving multi-category matches, keyword lists, edge-case rules, and the resulting distribution across categories.
 
 ## Results
 
@@ -124,7 +137,7 @@ These are documented in detail in `analysis/collection structure.md`.
 
 The enriched catalog data is [published](https://lite.datasette.io/?url=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/corning_historic_photos.db#/corning_historic_photos/photos?_sort=rowid) as an interactive [Datasette](https://datasette.io/) instance for browsing and querying. Datasette is an open-source tool that serves SQLite databases as a web interface with built-in search, filtering, and a JSON/CSV API.
 
-The `datasette/` directory contains the publication-ready database (`corning_historic_photos.db`) and a combined CSV export (`corning_historic_photos_20260321.csv`). The database was produced by joining the image metadata, catalog fields (subject, date), AI-generated tags and descriptions, and source URLs using the query in `data/table_join.sql`. The resulting dataset provides a single unified view of all 1,977 photographs with their technical attributes, descriptive metadata, and direct links to the original images on the archive website.
+The `datasette/` directory contains the publication-ready database (`corning_historic_photos.db`) and a combined CSV export (`corning_historic_photos_20260321.csv`). The database was produced by joining the image metadata, catalog fields (subject, date), AI-generated tags and descriptions, category assignments, and source URLs using the query in `data/table_join.sql`. The resulting dataset provides a single unified view of all 1,977 photographs with their technical attributes, descriptive metadata, thematic category, and direct links to the original images on the archive website. The category column enables filtering and browsing by topic (e.g., Disasters & Floods, Industry & Manufacturing).
 
 ## Setup
 
