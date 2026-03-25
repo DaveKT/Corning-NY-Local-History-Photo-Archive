@@ -1,0 +1,18 @@
+title: Corning, NY Local History Photo Archive
+description: >-
+  AI-enriched catalog of 1,977 digitized historical photographs (1842–1975) from the
+  Southeast Steuben County Library's Local History Photo Archive. Each record includes
+  the library's original catalog metadata supplemented with AI-generated descriptive
+  tags and one-sentence descriptions produced by Claude Haiku.
+source: Corning History — Local History Photo Archive
+source_url: https://corningnyhistory.com/local-history-photo-archive/
+about: AI-Assisted Cataloging Project
+about_url: https://github.com/DaveKT/Corning-NY-Local-History-Photo-Archive
+databases:
+  corning_historic_photos:
+    tables:
+      photos:
+        description: >-
+          Combined dataset of all 1,977 photographs with catalog fields (LH number,
+          subject, date), AI-generated tags and descriptions, technical image attributes
+          (dimensions, colorspace, hashes), and source URLs.
