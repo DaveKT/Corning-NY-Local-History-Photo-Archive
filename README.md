@@ -4,7 +4,7 @@ This project documents an effort to download, catalog, and enrich the [Corning, 
 
 The goal is to improve the discoverability of these images by generating structured tags, one-sentence descriptions, and thematic category assignments for every photo, supplementing the library's existing (and often sparse) subject/date metadata.
 
-You can directly interact with the enriched data using the [Datasette Lite URL](https://lite.datasette.io/?url=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/corning_historic_photos.db&metadata=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/metadata.yml#/corning_historic_photos/historic_photos?_sort=rowid).
+You can directly interact with the enriched data using the [Datasette Lite URL](https://lite.datasette.io/?url=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/corning_historic_photos.db&metadata=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/metadata.yml#/).
 
 ## Background
 
@@ -135,7 +135,7 @@ These are documented in detail in `analysis/collection structure.md`.
 
 ### Datasette
 
-The enriched catalog data is [published](https://lite.datasette.io/?url=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/corning_historic_photos.db&metadata=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/metadata.yml#/corning_historic_photos/historic_photos?_sort=rowid) as an interactive [Datasette](https://datasette.io/) instance for browsing and querying. Datasette is an open-source tool that serves SQLite databases as a web interface with built-in search, filtering, and a JSON/CSV API.
+The enriched catalog data is [published](https://lite.datasette.io/?url=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/corning_historic_photos.db&metadata=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/metadata.yml#/) as an interactive [Datasette](https://datasette.io/) instance for browsing and querying. Datasette is an open-source tool that serves SQLite databases as a web interface with built-in search, filtering, and a JSON/CSV API.
 
 The `datasette/` directory contains the publication-ready database (`corning_historic_photos.db`) and a combined CSV export (`corning_historic_photos_20260321.csv`). The database was produced by joining the image metadata, catalog fields (subject, date), AI-generated tags and descriptions, category assignments, and source URLs using the query in `data/table_join.sql`. The resulting dataset provides a single unified view of all 1,977 photographs with their technical attributes, descriptive metadata, thematic category, and direct links to the original images on the archive website. The category column enables filtering and browsing by topic (e.g., Disasters & Floods, Industry & Manufacturing).
 
