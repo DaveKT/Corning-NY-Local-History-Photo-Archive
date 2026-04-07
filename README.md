@@ -17,7 +17,7 @@ Before this project, the archive's catalog had significant gaps: 53% of records 
 The pipeline has four stages, each handled by a standalone Python script.
 
 ### 1. Download
-(`scripts/download_archive.py`)
+[scripts/download_archive.py](scripts/download_archive.py)
 
 Scrapes the archive website and downloads all full-resolution images into a local `photos/` directory. Supports concurrent downloads with configurable thread count and per-request delay. Skips previously downloaded files, making it safe to re-run.
 
@@ -26,7 +26,7 @@ python scripts/download_archive.py --output-dir ./photos --workers 4 --delay 0.2
 ```
 
 ### 2. Image Cataloging
-(`scripts/image_catalog.py`)
+[scripts/image_catalog.py](scripts/image_catalog.py)
 
 Scans the downloaded photos and produces a CSV of technical metadata: dimensions, file size, colorspace, and MD5/SHA-256 hashes. This is used for deduplication checks and to identify anomalies (e.g., unusual aspect ratios or unexpectedly small files).
 
@@ -35,7 +35,7 @@ python scripts/image_catalog.py ./photos --output data/image_attributes.csv
 ```
 
 ### 3. AI Description
-(`scripts/process_photos.py`)
+[scripts/process_photos.py](scripts/process_photos.py)
 
 Sends each image to Claude Haiku (via the OpenRouter API) along with any existing catalog metadata for context. The model returns 3-5 descriptive tags and a one-sentence description per image. Results are saved incrementally to a JSON file, making the process resumable if interrupted.
 
@@ -47,7 +47,7 @@ python scripts/process_photos.py
 The script also merges the AI-generated tags and descriptions back into the master CSV index.
 
 ### 4. Category Classification
-(`scripts/classify_photos.py`)
+[scripts/classify_photos.py](scripts/classify_photos.py)
 
 Assigns each photo exactly one of 14 thematic categories (e.g., Disasters & Floods, Industry & Manufacturing, Streetscapes & Architecture) using rule-based keyword matching against the Subject, Tags, and Description fields. A strict priority hierarchy resolves ambiguity when a photo matches more than one category. The classifier is deterministic and uses only standard-library modules.
 
