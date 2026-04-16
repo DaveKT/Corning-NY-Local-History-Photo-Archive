@@ -177,7 +177,15 @@ The script saves progress every 10 images and resumes from where it left off. Pr
 
 ## License
 
-The photographs in the Corning Local History Photo Archive are the property of the Southeast Steuben County Library. The code and analysis in this repository are provided for educational and digital humanities purposes.
+Code in the `scripts/` directory is licensed under the [MIT License](LICENSE).
+
+Derived catalog data in the `data/`, `datasette/`, and `analysis/` directories
+is licensed under [CC BY 4.0](LICENSE-DATA). This includes AI-generated tags,
+descriptions, and enriched metadata produced by this project.
+
+The underlying photographs are the property of the Southeast Steuben County
+Library and the Corning-Painted Post Historical Society and are not covered by
+either license above.
 
 ## Acknowledgments
 
