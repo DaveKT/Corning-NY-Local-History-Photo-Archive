@@ -1,0 +1,510 @@
+{
+  "description": "Calibration set for the AI-description refinement pipeline. known_bad photos have confirmed catalog errors documented in GitHub issues; known_good photos are a random control sample (seed=42) with no reported errors (not exhaustively verified).",
+  "created": "2026-07-04",
+  "known_bad": {
+    "75-0084": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0085": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0086": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0087": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0088": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0089": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0090": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0091": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0092": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0093": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0094": [
+      {
+        "issue": 21,
+        "title": "Change \"Schoolhouse to building\""
+      }
+    ],
+    "75-0110": [
+      {
+        "issue": 20,
+        "title": "Change Category to Transportation"
+      }
+    ],
+    "75-0143": [
+      {
+        "issue": 2,
+        "title": "Basketball Team OBBN?"
+      }
+    ],
+    "75-0154": [
+      {
+        "issue": 3,
+        "title": "Incorrect Game Attribution"
+      }
+    ],
+    "75-0241": [
+      {
+        "issue": 15,
+        "title": "Not a Promotional Poster"
+      }
+    ],
+    "75-0249": [
+      {
+        "issue": 22,
+        "title": "Incorrect description"
+      }
+    ],
+    "75-0281": [
+      {
+        "issue": 16,
+        "title": "Not Native American's, Soldiers in Training"
+      }
+    ],
+    "75-0303": [
+      {
+        "issue": 25,
+        "title": "Incorrect Classification and Description"
+      }
+    ],
+    "75-0347": [
+      {
+        "issue": 4,
+        "title": "Incorrect Sport Assignment"
+      }
+    ],
+    "75-0348": [
+      {
+        "issue": 5,
+        "title": "Change to Basketball Team"
+      }
+    ],
+    "75-0375": [
+      {
+        "issue": 26,
+        "title": "Description should be about felling a tree"
+      }
+    ],
+    "75-0377": [
+      {
+        "issue": 27,
+        "title": "Incorrect description"
+      }
+    ],
+    "75-0738": [
+      {
+        "issue": 1,
+        "title": "Two Parade Photos Misclassified"
+      }
+    ],
+    "75-0776": [
+      {
+        "issue": 1,
+        "title": "Two Parade Photos Misclassified"
+      }
+    ],
+    "75-0822": [
+      {
+        "issue": 17,
+        "title": "\"Sphere\" is actually a Globe"
+      }
+    ],
+    "75-0844": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-0856": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-0857": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-0866": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-0881": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-0882": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-0983": [
+      {
+        "issue": 19,
+        "title": "Wrong Category - Change to Civic Life"
+      }
+    ],
+    "75-0999": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1002": [
+      {
+        "issue": 19,
+        "title": "Wrong Category - Change to Civic Life"
+      }
+    ],
+    "75-1003": [
+      {
+        "issue": 19,
+        "title": "Wrong Category - Change to Civic Life"
+      }
+    ],
+    "75-1026": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1098": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1240": [
+      {
+        "issue": 28,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1252": [
+      {
+        "issue": 28,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1267": [
+      {
+        "issue": 29,
+        "title": "Change to Streetscapes and Architecture"
+      }
+    ],
+    "75-1298": [
+      {
+        "issue": 23,
+        "title": "Incorrectly assigns female gender to one of the subjects"
+      }
+    ],
+    "75-1304": [
+      {
+        "issue": 24,
+        "title": "Description needs to be updated"
+      }
+    ],
+    "75-1547": [
+      {
+        "issue": 19,
+        "title": "Wrong Category - Change to Civic Life"
+      }
+    ],
+    "75-1571": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1608": [
+      {
+        "issue": 30,
+        "title": "Update description - not a beach... a road."
+      }
+    ],
+    "75-1621": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1623": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1626": [
+      {
+        "issue": 31,
+        "title": "Change Category to Streetscapes and Architecture"
+      }
+    ],
+    "75-1667": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1682": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1744": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "75-1767": [
+      {
+        "issue": 32,
+        "title": "Change Category to Streetscapes and Architecture"
+      }
+    ],
+    "75-1796": [
+      {
+        "issue": 19,
+        "title": "Wrong Category - Change to Civic Life"
+      }
+    ],
+    "75-1909": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "76-1700": [
+      {
+        "issue": 14,
+        "title": "Pool is Actually A Fountain"
+      }
+    ],
+    "76-1729": [
+      {
+        "issue": 13,
+        "title": "Change Woman to Girl"
+      }
+    ],
+    "76-1732": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "76-1742": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "76-1743": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "76-1744": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "76-1746": [
+      {
+        "issue": 12,
+        "title": "Wrong Location"
+      }
+    ],
+    "76-1750": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "76-1759": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "76-1761": [
+      {
+        "issue": 11,
+        "title": "Typo \"Vessel on the Pacific Ocean\""
+      }
+    ],
+    "77-1771": [
+      {
+        "issue": 10,
+        "title": "Another Misclassified Baseball Game"
+      }
+    ],
+    "77-1786": [
+      {
+        "issue": 9,
+        "title": "Misclassified Military Event"
+      }
+    ],
+    "77-1834": [
+      {
+        "issue": 8,
+        "title": "Baseball Related"
+      }
+    ],
+    "77-1860": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "77-1882": [
+      {
+        "issue": 7,
+        "title": "Wrong Category and Description"
+      }
+    ],
+    "77-1883": [
+      {
+        "issue": 6,
+        "title": "Wrong Category and Description"
+      }
+    ],
+    "77-1909": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ],
+    "77-1935": [
+      {
+        "issue": 18,
+        "title": "Wrong Category"
+      }
+    ]
+  },
+  "known_good": [
+    "75-0015",
+    "75-0054",
+    "75-0057",
+    "75-0067",
+    "75-0072",
+    "75-0121",
+    "75-0209",
+    "75-0227",
+    "75-0239",
+    "75-0242",
+    "75-0255",
+    "75-0269",
+    "75-0289",
+    "75-0318",
+    "75-0358",
+    "75-0399",
+    "75-0407",
+    "75-0493",
+    "75-0526",
+    "75-0533",
+    "75-0538",
+    "75-0544",
+    "75-0566",
+    "75-0596",
+    "75-0659",
+    "75-0689",
+    "75-0704",
+    "75-0746",
+    "75-0858",
+    "75-0865",
+    "75-0875",
+    "75-0912",
+    "75-0962",
+    "75-0966",
+    "75-1092",
+    "75-1097",
+    "75-1099",
+    "75-1158",
+    "75-1189",
+    "75-1296",
+    "75-1365",
+    "75-1383",
+    "75-1397",
+    "75-1416",
+    "75-1486",
+    "75-1489",
+    "75-1519",
+    "75-1524",
+    "75-1557",
+    "75-1579",
+    "75-1619",
+    "75-1648",
+    "75-1709",
+    "75-1757",
+    "75-1764",
+    "75-1798",
+    "75-1827",
+    "75-1841",
+    "75-1849",
+    "75-1851",
+    "75-1888",
+    "75-1897",
+    "76-1682",
+    "76-1685",
+    "76-1690",
+    "76-1735",
+    "77-1784",
+    "77-1831",
+    "77-1880",
+    "77-1951"
+  ]
+}

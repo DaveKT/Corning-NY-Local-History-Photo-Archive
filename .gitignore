@@ -1,5 +1,6 @@
 # Downloaded photos (regenerate with scripts/download_archive.py)
 photos/
+data/photos/
 
 # Python virtual environment
 .venv/
