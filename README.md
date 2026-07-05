@@ -186,6 +186,8 @@ The pipeline was calibrated before the full run against a ground-truth set built
 │   ├── metadata.yml                     # Datasette presentation metadata
 │   ├── corning_historic_photos_20260321.csv  # Combined export (pre-correction snapshot)
 │   └── corning_historic_photos_20260705.csv  # Combined export incl. category (post-correction)
+├── docs/
+│   └── image-thumbnails-in-datasette-lite.md  # Feature spec (proposed)
 ├── TLDR.md
 ├── TODO.md
 ├── .gitignore
