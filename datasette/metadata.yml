@@ -11,8 +11,9 @@ about_url: https://github.com/DaveKT/Corning-NY-Local-History-Photo-Archive
 databases:
   corning_historic_photos:
     tables:
-      photos:
+      historic_photos:
         description: >-
           Combined dataset of all 1,977 photographs with catalog fields (LH number,
-          subject, date), AI-generated tags and descriptions, technical image attributes
+          subject, date), AI-generated tags and descriptions (reviewed and corrected
+          by the verification pipeline), thematic category, technical image attributes
           (dimensions, colorspace, hashes), and source URLs.

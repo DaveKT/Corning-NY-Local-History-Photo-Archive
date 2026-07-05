@@ -135,8 +135,11 @@ def main():
         Path(args.working_db), "photo_description",
         {"tags": "Tags", "description": "Description"},
         "LHNo", corrections, args.dry_run)
-    print(f"  applied {a2}, already current {s2}, stale {st2}")
-    print("  (category corrections don't apply here: no category table)")
+    a3, s3, st3 = apply_to_db(
+        Path(args.working_db), "category", {"category": "category"},
+        "LHNo", corrections, args.dry_run)
+    print(f"  applied {a2 + a3}, already current {s2 + s3}, "
+          f"stale {st2 + st3}")
 
     print("\nDone." if not args.dry_run
           else "\nDry run complete — nothing written.")
