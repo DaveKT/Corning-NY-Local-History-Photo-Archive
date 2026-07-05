@@ -78,7 +78,8 @@ flowchart TD
     I --> J[("corning_photos.sqlite<br/>corning_historic_photos.db<br/>+ FTS rebuild")]
 ```
 
-### Stage A — Verification ([scripts/verify_photos.py](scripts/verify_photos.py))
+### Stage A — Verification
+[scripts/verify_photos.py](scripts/verify_photos.py)
 
 Sends each photo (downscaled to 1024px) plus its existing record to Claude Haiku with a fact-checking prompt: transcribe any visible caption (captions are authoritative), find contradictions between the record and the image, grade each error material or minor, and audit the assigned category against the 14-category schema. It does **not** rewrite records for style — a correction requires an enumerated error. Results are saved incrementally and the run is resumable.
 
@@ -86,7 +87,8 @@ Sends each photo (downscaled to 1024px) plus its existing record to Claude Haiku
 python scripts/verify_photos.py --all
 ```
 
-### Stage B — Triage ([scripts/triage_photos.py](scripts/triage_photos.py))
+### Stage B — Triage
+[scripts/triage_photos.py](scripts/triage_photos.py)
 
 Free, deterministic flagging. A photo is flagged for: material errors, a category change (from the verifier's audit or from re-running the keyword classifier on corrected text), low verifier confidence, unsettled doubts, or lexicon rules covering the known failure modes (group-identity terms, risky object identifications, uncorroborated sport names). Gendered language marks a record identity-sensitive without flagging it by itself.
 
@@ -94,7 +96,8 @@ Free, deterministic flagging. A photo is flagged for: material errors, a categor
 python scripts/triage_photos.py
 ```
 
-### Stage C — Adjudication ([scripts/adjudicate_photos.py](scripts/adjudicate_photos.py))
+### Stage C — Adjudication
+[scripts/adjudicate_photos.py](scripts/adjudicate_photos.py)
 
 Flagged photos go to Claude Sonnet at higher resolution (1568px) with the first-pass findings attached. Sonnet issues the final proposed record. Confident, non-identity fixes are written to `corrections_auto.json`; everything else routes to the human queue. Photos referenced by open GitHub issues **always** route to the human queue with the issue attached (`--force-human`), because archival knowledge can contradict what any model sees.
 
@@ -102,7 +105,8 @@ Flagged photos go to Claude Sonnet at higher resolution (1568px) with the first-
 python scripts/adjudicate_photos.py --force-human data/refinement/issue_overrides.json
 ```
 
-### Stage D — Human review ([scripts/review_app.py](scripts/review_app.py))
+### Stage D — Human review
+[scripts/review_app.py](scripts/review_app.py)
 
 A local web app (standard library only, no extra dependencies) that shows each queued photo with the current and proposed records side by side. Keyboard-driven: `a` accepts the proposed record, `k` keeps the original, `e` edits fields first. Every verdict is saved immediately to `corrections.json`, so sessions can be interrupted and resumed.
 
@@ -110,7 +114,8 @@ A local web app (standard library only, no extra dependencies) that shows each q
 python scripts/review_app.py    # opens http://localhost:8765
 ```
 
-### Stage E — Apply ([scripts/apply_corrections.py](scripts/apply_corrections.py))
+### Stage E — Apply
+[scripts/apply_corrections.py](scripts/apply_corrections.py)
 
 Corrections are an overlay, never in-place edits: each entry records the photo, field, old value, new value, source (`sonnet` or `human`), and timestamp. The apply script verifies the expected old value before writing (stale entries are reported, not applied), is idempotent, gives human corrections precedence, updates both databases, and rebuilds the full-text index.
 
