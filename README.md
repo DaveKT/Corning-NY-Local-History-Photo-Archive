@@ -4,6 +4,8 @@
 
 This project documents an effort to download, catalog, and enrich the [Corning, NY Local History Photo Archive](https://corningnyhistory.com/local-history-photo-archive/) using AI-generated image descriptions. The archive is maintained by the Southeast Steuben County Library and contains 1,977 digitized historical photographs spanning 1842 to 1975.
 
+**In a hurry? Read the [TL;DR](TLDR.md).**
+
 The goal is to improve the discoverability of these images by generating structured tags, one-sentence descriptions, and thematic category assignments for every photo, supplementing the library's existing (and often sparse) subject/date metadata.
 
 You can directly interact with the enriched data using the [Datasette Lite URL](https://lite.datasette.io/?url=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/corning_historic_photos.db&metadata=https://raw.githubusercontent.com/DaveKT/Corning-NY-Local-History-Photo-Archive/master/datasette/metadata.yml#/).
@@ -184,6 +186,7 @@ The pipeline was calibrated before the full run against a ground-truth set built
 │   ├── metadata.yml                     # Datasette presentation metadata
 │   ├── corning_historic_photos_20260321.csv  # Combined export (pre-correction snapshot)
 │   └── corning_historic_photos_20260705.csv  # Combined export incl. category (post-correction)
+├── TLDR.md
 ├── TODO.md
 ├── .gitignore
 └── README.md
