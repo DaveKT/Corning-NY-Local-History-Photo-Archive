@@ -16,4 +16,11 @@ databases:
           Combined dataset of all 1,977 photographs with catalog fields (LH number,
           subject, date), AI-generated tags and descriptions (reviewed and corrected
           by the verification pipeline), thematic category, technical image attributes
-          (dimensions, colorspace, hashes), and source URLs.
+          (dimensions, colorspace, hashes), and source URLs. Full-text search is
+          available on this table.
+      photo_catalog:
+        description: >-
+          Browsing view of the catalog: all 1,977 photographs ordered by LH number,
+          with file size, dimensions, subject, date, tags, description, category,
+          and a link to the original image — without the technical hash columns.
+          For full-text search, use the historic_photos table.
