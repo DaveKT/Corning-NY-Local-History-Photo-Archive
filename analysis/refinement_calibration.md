@@ -56,7 +56,7 @@ classifier on corrected text, low confidence (<0.85), doubts, and
 unconditional lexicon rules for group-identity and risky-object terms.
 Gendered language marks a record identity-sensitive without flagging it.
 
-## Adjudication (Stage C, Claude Sonnet, 1568px, ~$0.02/photo)
+## Adjudication (Stage C, Claude Sonnet, 1568px, ~$0.013/photo measured)
 
 Funnel on the calibration set (111 flagged photos):
 
@@ -72,13 +72,40 @@ Funnel on the calibration set (111 flagged photos):
   threshold set to Sonnet's modal confidence (0.85). Identity changes and
   Sonnet-declared ambiguity route to humans regardless of confidence.
 
-## Projection for the full collection (1,977 photos)
+## Full-collection run (2026-07-05): projection vs. actual
 
-- Stage A (Haiku): ~$4
-- Stage C (Sonnet on ~60–65% of collection): ~$20–25
-- Human queue: ~72 issue photos + ~5.7% of the rest ≈ **~180 photos**,
-  roughly 45–60 minutes in the review app.
-- Total model cost per full cycle: **~$25–30**.
+| Metric | Projected | Actual |
+|--------|----------:|-------:|
+| Flagged at triage | 60–65% | 72% (1,420 of 1,977) |
+| Stage A cost (Haiku) | ~$4 | ~$5 |
+| Stage C cost (Sonnet) | ~$20–25 | ~$18 (1,310 new calls, ~$0.013 each) |
+| Human queue | ~180 photos | 283 photos (72 issue + 211 others) |
+| Total model cost | ~$25–30 | **~$27** (incl. ~$4 calibration) |
+
+The human queue overshot the control-based projection (11% of non-issue
+photos vs. 5.7% in the controls) — the collection proved error-richer than
+the random control sample suggested, which also pushed the flag rate up.
+
+Final outcomes: 98 flagged records upheld by the adjudicator, 1,039 photos
+auto-corrected, 283 human-reviewed in the app (200 proposals accepted, 75
+edited before saving, 8 originals kept). In total **2,437 field
+corrections** (1,221 descriptions, 767 tags, 449 categories) were applied
+across 1,313 photos, and all 32 GitHub issues were resolved in the
+published data and closed.
+
+## Production notes
+
+Two robustness problems surfaced during the full run, both now handled:
+
+1. **Token limits.** Photos containing long printed documents or captions
+   produced responses that hit the output cap mid-JSON. `max_tokens` was
+   raised (600 → 1000 for the verifier, 700 → 1200 for the adjudicator).
+2. **Invalid JSON quirks.** Two recurring patterns are repaired by the
+   shared parser (`repair_candidates` in verify_photos.py): a
+   parenthesized annotation after a string value
+   (`"CORNING" (visible on drum),`) and unescaped double quotes inside a
+   string value (quoted document text). After both fixes, the full run
+   completed with zero unparsed responses.
 
 ## Correction flow
 

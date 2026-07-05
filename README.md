@@ -61,17 +61,17 @@ The output CSV is imported into both `data/corning_photos.sqlite` and `datasette
 
 ## Verification & Correction Pipeline
 
-The original AI descriptions contain errors — misidentified sports, objects, settings, and in some cases the gender or identity of people in the photos (documented in this repository's GitHub issues). A second pipeline finds and corrects these errors with as little manual review as possible: models handle everything they can decide reliably, and a human is pulled in only for identity-related changes, genuinely ambiguous images, and photos with open GitHub issues.
+The original AI descriptions contained errors — misidentified sports, objects, settings, and in some cases the gender or identity of people in the photos (documented as GitHub issues #1–#32). A second pipeline finds and corrects these errors with as little manual review as possible: models handle everything they can decide reliably, and a human is pulled in only for identity-related changes, genuinely ambiguous images, and photos with open GitHub issues. The pipeline was run over the full collection in July 2026 (results below) and remains re-runnable for future refinement cycles.
 
 ```mermaid
 flowchart TD
-    A["1,977 photos + catalog records"] --> B["Stage A — verify_photos.py<br/>Claude Haiku fact-checks each record<br/>(~$4, full collection)"]
+    A["1,977 photos + catalog records"] --> B["Stage A — verify_photos.py<br/>Claude Haiku fact-checks each record<br/>(~$5, full collection)"]
     B --> C["Stage B — triage_photos.py<br/>rule-based flagging (free)"]
-    C -->|"record confirmed"| D["Auto-confirmed<br/>no change"]
-    C -->|"flagged"| E["Stage C — adjudicate_photos.py<br/>Claude Sonnet re-examines at high res<br/>(~$0.02/photo)"]
-    E -->|"record was fine"| D
-    E -->|"confident, non-identity fix"| F["corrections_auto.json"]
-    E -->|"identity change, ambiguity,<br/>or open GitHub issue"| G["Stage D — review_app.py<br/>human review web app"]
+    C -->|"557 records confirmed"| D["Auto-confirmed<br/>no change"]
+    C -->|"1,420 flagged"| E["Stage C — adjudicate_photos.py<br/>Claude Sonnet re-examines at high res<br/>(~$0.013/photo, ~$18 total)"]
+    E -->|"98 records were fine"| D
+    E -->|"1,039 confident, non-identity fixes"| F["corrections_auto.json"]
+    E -->|"283: identity change, ambiguity,<br/>or open GitHub issue"| G["Stage D — review_app.py<br/>human review web app"]
     G --> H["corrections.json"]
     F --> I["Stage E — apply_corrections.py"]
     H --> I
@@ -121,7 +121,15 @@ python scripts/apply_corrections.py
 
 ### Calibration
 
-The pipeline was calibrated before the full run against a ground-truth set built from the GitHub issues (72 known-bad photos) plus 70 random controls. The final configuration flags 100% of the known-bad photos while sending only ~6% of clean photos to the human queue. Prompt iterations, metrics, and design decisions are documented in [analysis/refinement_calibration.md](analysis/refinement_calibration.md).
+The pipeline was calibrated before the full run against a ground-truth set built from the GitHub issues (72 known-bad photos) plus 70 random controls. The final configuration flagged 100% of the known-bad photos while sending only ~6% of the control photos to the human queue. Prompt iterations, metrics, and design decisions are documented in [analysis/refinement_calibration.md](analysis/refinement_calibration.md).
+
+### Full-run results (July 2026)
+
+- 1,977 photos verified (Stage A); 557 auto-confirmed at triage, 1,420 adjudicated by Sonnet (Stage C).
+- 98 records upheld as-is; 1,039 photos auto-corrected; 283 photos human-reviewed in the app (200 proposals accepted, 75 edited, 8 originals kept).
+- **2,437 field corrections applied** across 1,313 photos: 1,221 descriptions, 767 tags, 449 categories.
+- All 32 GitHub issues resolved in the published data and closed.
+- Total model cost: **~$27** (Stage A ~$5, Stage C ~$18, calibration ~$4). Human review time: 283 photos.
 
 ## Repository Structure
 
@@ -151,6 +159,7 @@ The pipeline was calibrated before the full run against a ground-truth set built
 │   ├── photos/                          # Downloaded images (not committed; see Setup)
 │   └── refinement/                      # Verification results, queues, and corrections overlay
 │       ├── verification_results.json    #   Stage A output (per-photo verdicts)
+│       ├── verification_results_run*.json  # Archived calibration prompt iterations
 │       ├── triage_report.csv            #   Stage B report over all verified photos
 │       ├── review_queue.json            #   Stage B output: flagged photos
 │       ├── issue_overrides.json         #   Photos with open GitHub issues (always human-reviewed)
@@ -167,6 +176,7 @@ The pipeline was calibrated before the full run against a ground-truth set built
 │   └── refinement_calibration.md        # Refinement pipeline calibration report
 ├── datasette/
 │   ├── corning_historic_photos.db       # SQLite database for Datasette publishing (corrected)
+│   ├── metadata.yml                     # Datasette presentation metadata
 │   ├── corning_historic_photos_20260321.csv  # Combined export (pre-correction snapshot)
 │   └── corning_historic_photos_20260705.csv  # Combined export incl. category (post-correction)
 ├── TODO.md
@@ -203,7 +213,7 @@ AI descriptions were generated for all 1,977 images. Each record now has:
 - **3-5 descriptive tags** based on visible image content (e.g., 'flooded street; brick buildings; 1940s automobiles; downtown; black and white photograph')
 - **A one-sentence description** identifying visible text, landmarks, people, dates, and notable features
 
-These supplement (not replace) the library's existing subject and date fields. The AI descriptions are intended as a draft layer for human review. Errors found in that draft layer — misidentified sports, objects, and people (see this repository's GitHub issues) — are corrected through the [verification & correction pipeline](#verification--correction-pipeline) above.
+These supplement (not replace) the library's existing subject and date fields. The AI descriptions are intended as a draft layer for human review. Errors found in that draft layer — misidentified sports, objects, and people (see this repository's GitHub issues) — were corrected through the [verification & correction pipeline](#verification--correction-pipeline) above; the published data reflects those corrections.
 
 ### Collection Highlights
 
@@ -222,7 +232,7 @@ The collection is organized into three series: 75 (1,641 photos), 76 (141 photos
 - Inconsistent geographic tags (`corning ny` vs. `corning new york`)
 - 342 photos described as "black and white" but stored in RGB colorspace
 - One panoramic outlier (75-0705) at 1386x180 pixels
-- The AI-generated tags and descriptions contain identification errors — wrong sports, misread objects and settings, and occasional gender/identity mistakes (documented as GitHub issues; addressed by the verification & correction pipeline)
+- The AI-generated tags and descriptions contained identification errors — wrong sports, misread objects and settings, and occasional gender/identity mistakes (documented as GitHub issues #1–#32; corrected by the verification & correction pipeline in July 2026, all issues closed)
 
 These are documented in detail in `analysis/collection structure.md`.
 
